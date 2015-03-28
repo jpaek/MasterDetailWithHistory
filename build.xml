@@ -1,0 +1,31 @@
+<project name="Sample usage of Salesforce Ant tasks" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+
+    <!-- property file="build.properties"/  -->
+    <property environment="env"/>
+
+    <target name="deployAll">
+      <!-- antcall target="retrieve" / -->
+      <antcall target="deployMD" />
+      <antcall target="deployHistory" />
+      <antcall target="deploy" />
+    </target>
+
+
+    <!-- Deploy objects that are MD with Standard and has history tracking enabled -->
+    <target name="deployMD">
+      <sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="masterDetailShell">
+      </sf:deploy>
+    </target>
+
+    <!-- Enable history tracking on objects that are MD with Standard -->
+    <target name="deployHistory">
+      <sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="enableHistory">
+      </sf:deploy>
+    </target>
+
+    <!-- Deploy the components -->
+    <target name="deploy">
+      <sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="migrateFull">
+      </sf:deploy>
+    </target>
+</project>
